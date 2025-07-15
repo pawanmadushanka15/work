@@ -15,7 +15,7 @@
 
     <script>
         const clickButton = document.getElementById('clickButton');
-        const doubleClickButton = document.getElementById('doubleClickButton'); // ✅ FIXED: pass ID as string
+        const doubleClickButton = document.getElementById('doubleClickButton'); 
         const outputDiv = document.getElementById("output");
 
         // Single click event
@@ -24,7 +24,7 @@
         });
 
         // Double-click event
-        doubleClickButton.addEventListener('dblclick', function(event) {  // ✅ FIXED: event name is "dblclick"
+        doubleClickButton.addEventListener('dblclick', function(event) {  
             outputDiv.innerHTML += 'Double-clicked! ' + JSON.stringify(event) + "<br>";
         });
 
