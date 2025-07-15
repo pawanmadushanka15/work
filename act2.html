@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <form onsubmit="return validateForm()">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <label for="country">Select a Country:</label>
+        <select id="country" onchange="handleChange()">
+            <option value="USA">USA</option>
+            <option value="Canada">Canada</option>
+            <option value="UK">UK</option>
+            <option value="India">India</option>
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+    <p id="txt"></p>
+    <br>
+
+    <form onreset="restForm()">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <input type="reset" value="Reset">
+    </form>
+    <br><br>
+
+    <label for="search">Search:</label>
+    <input type="text" id="search" oninput="handleInput()"><br>
+    <div id="message" style=" margin-top: 10px; font-weight: lighter;border: 1px solid #ddd;padding: 10px; background-color: #f9f9f9; border-radius: 5px; font-family: 'Arial', sans-serif; font-size: 14px; color: #333; width: 30%;"></div>
+    <br><br>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" onfocus="handleFocus()" onblur="handleBlur()">
+    <br>
+    <p id="output"></p>
+
+    <script>
+        function handleChange(){
+            let selectCountry=document.getElementById('country').value;
+            document.getElementById("txt").textContent="Selected country: "+selectCountry;
+        }
+
+        function validateForm(){
+            let username=document.getElementById('username').value;
+            let password=document.getElementById('password').value;
+
+            if (username === "" || password === ""){
+                alert("Please fill in all fields");
+                return false;
+            }
+            alert("Form submitted! Username is:"+username);
+            return true;
+        }
+
+        function restForm(){
+            alert("Form has been reset!");
+        }
+
+        let messageElement=document.getElementById('message');
+        function handleInput(){
+            let searchInput=document.getElementById('search').value;
+            messageElement.innerHTML+="Search input: "+searchInput+'<br>';  
+        }
+
+        const output=document.getElementById('output');
+        function handleFocus(){
+            output.innerHTML+="Input has focus"+"<br>";
+        }
+
+        function handleBlur(){
+            output.innerHTML+="Input lost focus"+"<br>"
+        }
+    </script>
+
+
+
+</body>
+</html>

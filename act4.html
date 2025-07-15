@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Event Example</title>
+</head>
+<body>
+    <button id="clickButton">Click me!</button>
+    <button id="doubleClickButton">Double-click me!</button>
+    <div id="mouseDownDiv"
+    style="width: 600px; height: 100px; background-color: lightblue;">
+    Please perform mouse down and up event any where in this DIV.</div>
+
+    <p id="output"></p>
+
+    <script>
+        const clickButton=document.getElementById('clickButton');
+        const outputDiv=document.getElementById("output");
+        clickButton.addEventListener('click',function(event){
+           outputDiv.innerHTML+='Clicked!'+JSON.stringify(event)+"<br>";           
+        });
+
+          
+    </script>
+</body>
+</html>
