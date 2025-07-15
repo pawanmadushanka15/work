@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <title>Click Event Example</title>
+        <style>
+            #myDiv{
+                width: 600px;
+                height:200px;
+                background-color: lightblue;
+            }
+        </style>
+    </head>
+    <body>
+        <button id="myButton">Click Me</button><br>
+        <div id="myDiv">Hover over me</div>
+
+        <script>
+
+            const button=document.getElementById("myButton");
+
+            function handleClick() {
+                alert("Button clicked!");
+            } 
+            
+            button.addEventListener("click",handleClick);
+
+            const myDiv=document.getElementById("myDiv");
+
+            function handleMouseover(){
+                myDiv.style.backgroundImage="url('welcome.jpg')";
+            }
+
+            myDiv.addEventListener("mouseover",handleMouseover);
+
+            function handleMouseout(){
+                myDiv.style.backgroundImage=""
+                myDiv.style.backgroundColor="green";
+            }
+
+            myDiv.addEventListener("mouseout",handleMouseout);
+        </script>
+
+    </body>
+</html>

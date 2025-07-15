@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <h3>Press any key</h3>
+    <div>Enter some text:
+        <input type="text">
+    </div>
+    <div id="output"></div>
+    <div id="output1"></div>
+    <div id="output2"></div>
+
+    <script>
+        document.addEventListener('keydown',function(event){
+            document.getElementById('output').innerHTML=
+            "Key pressed: "+event.key;
+        });
+
+        document.addEventListener('keypress',function(event){
+            document.getElementById('output1').innerHTML=
+            "Character pressed: "+event.key;
+        });
+
+        document.addEventListener('keyup',function(event){
+            document.getElementById('output2').innerHTML=
+            "Character released: "+event.key;
+        });
+
+     
+    </script>
+</html>
