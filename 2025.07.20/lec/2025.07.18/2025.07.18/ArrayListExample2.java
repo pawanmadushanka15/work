@@ -5,6 +5,7 @@ public class ArrayListExample2 {
         // Create an ArrayList of custom objects
         ArrayList<Person> personList = new ArrayList<>();
 
+
         // Create some Person objects
         Person person1 = new Person("John", 25);
         Person person2 = new Person("Alice", 30);
@@ -14,7 +15,7 @@ public class ArrayListExample2 {
         personList.add(person1);
         personList.add(person2);
         personList.add(person3);
-
+        
         // Accessing and modifying objects
         Person retrievedPerson = personList.get(1);
         System.out.println("Person at index 1: " + retrievedPerson.getName() + ", " + retrievedPerson.getAge());
