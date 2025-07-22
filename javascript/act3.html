@@ -1,0 +1,16 @@
+<html>
+    <head>
+        <title>Javascript tutorial</title>
+    </head>
+    <body>
+        <p id="demo"></p>
+        <script>
+            let num1=[2,3,4,5,6,7];
+            let num3=num1.reduce(sum)
+            function sum(total,value){
+                return total+value;
+            }
+            document.getElementById("demo").innerHTML=num3;
+        </script>
+    </body>
+</html> 
