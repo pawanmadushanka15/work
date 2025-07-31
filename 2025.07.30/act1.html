@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Click Event</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <form id="form1" onsubmit="return validateForm()">
+            <label for="user">Username: </label>
+            <input type="text" id="user" name="user">
+            <label for="pass">Password: </label>
+            <input type="password" id="pass" name="pass">
+            <br><br>
+            <label for="country">Select a country: </label>
+            <select id="country" name="country" onchange="handleChange()">
+                <option>USA</option>
+                <option>Canada</option>
+                <option>UK</option>
+                <option>Newzeland</option>
+            </select>
+            <input type="submit" value="submit">
+            <p id="text"></p>
+        </form>
+        <br>
+        <form id="form2" onreset="resetForm()">
+            <label for="email">Email: </label>
+            <input type="email" name="email" id="email">
+            <input type="reset" value="reset"> 
+        </form>
+        <br><br>
+        <label for="search">Search: </label>
+        <input type="search" name="search" id="search" oninput="handleInput()">
+        <br><br>
+        <div id="box"></div>
+        <br><br>
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name">
+
+        <script>
+            function handleChange(){
+                let country=document.getElementById("country").value;
+                document.getElementById("text").innerHTML="Selected country:"+country;
+            }
+
+            function handleInput(){
+                let search=document.getElementById("search").value;
+                document.getElementById("box").innerHTML+=search+"<br>";
+            }
+
+            function validateForm(){
+                let user=document.getElementById("user").value;
+                let pass=document.getElementById("pass").value;
+                if(user==="" || pass===""){
+                    alert("Please fill in all fields");
+                    return false
+                }
+                return true;
+            }
+
+            function resetForm(){
+                alert("Form is reset");
+            }
+        </script>
+
+    </body>
+</html> 
