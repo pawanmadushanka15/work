@@ -1,39 +1,36 @@
 <?php
 session_start();
-if(!issue($_SESSION['user'])){
+if (!isset($_SESSION['user'])) {
     header("location:index.php");
+    exit();
 }
 
-if($_SERVER['REQUEST_METHOD'] == "POST"){
-    //connect to the database
-    $conn = new mysqli("localhost","root","","first_db");
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    // connect to the database
+    $conn = new mysqli("localhost", "root", "", "first_db");
 
-    //check connection
-    if($conn->connect_error){
-        die("connection failed" . $conn->connect_error);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
 
-    //sanitize input
-    $details=mysqli_real_escape_string($conn,$_POST['details']);
-    $time=strftime("%X"); //Time
-    $date=strftime("%B %d,%Y");//Date
-    $decision="no";
+    // sanitize inputs
+    $details = trim($_POST['details']);
+    $date = date("Y-m-d"); // proper date format
+    $time = date("H:i:s"); // proper time format
+    $decision = isset($_POST['public']) ? "yes" : "no";
 
-    //check if 'public' checkbox was selected
-    if(isset($_POST['public'])){
-        $decision="yes";
-    }
+    // use prepared statement
+    $stmt = $conn->prepare("INSERT INTO list (details, date_posted, time_posted, public) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $details, $date, $time, $decision);
 
-    //Insert into database
-    $query="INSERT INTO list(details,date_posted,time_posted,public)
-            VALUES('$details','$date,'$time','$decision')";
-
-    if(mysqli_query($conn,$query)){
-        header("Location:home.php");
+    if ($stmt->execute()) {
+        header("Location: home.php");
         exit();
-    }else{
-        echo "Error: ".mysqli_error($conn);
+    } else {
+        echo "Error: " . $stmt->error;
     }
 
+    $stmt->close();
     $conn->close();
 }
+?>

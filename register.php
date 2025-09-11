@@ -1,56 +1,51 @@
+<?php
+session_start();
+?>
+
 <html>
-    <head>
-        <title>My first PHP Website</title>
-    </head>
-    <body>
-        <h2>Registration Page</h2>
-        <a href="index.php">Click here to go back</a><br/><br/>
-        <form action="register.php" method="POST">
-           Enter Username: <input type="text" 
-           name="username" required="required" /> <br/>
-           Enter password: <input type="password" 
-           name="password" required="required" /> <br/>
-           <input type="submit" value="Register"/>
-        </form>
-    </body>
+<head>
+    <title>Register</title>
+</head>
+<body>
+    <h2>Registration Page</h2>
+    <a href="login.php">Already have an account? Login</a><br/><br/>
+    <form action="register.php" method="POST">
+        Enter Username: <input type="text" name="username" required /> <br/>
+        Enter Password: <input type="password" name="password" required /> <br/>
+        <input type="submit" value="Register"/>
+    </form>
+</body>
 </html>
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Connect to database
-    $conn = new mysqli("localhost", "root", "", "student");
-    $bool = true;
+    $conn = new mysqli("localhost", "root", "", "first_db");
+    if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
 
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
+    $username = trim($_POST["username"]);
+    $password = trim($_POST["password"]); // store exactly as entered
 
-    // Escape inputs
-    $username = mysqli_real_escape_string($conn, $_POST["username"]);
-    $password = mysqli_real_escape_string($conn, $_POST["password"]);
+    // Check if username exists
+    $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    // echo "Username entered is: " . $username . "<br />";
-    // echo "Password entered is: " . $password;
+    if ($result->num_rows > 0) {
+        echo '<script>alert("Username has been taken!"); window.location.assign("register.php");</script>';
+    } else {
+        // Store password in plain text
+        $stmt = $conn->prepare("INSERT INTO users (username, password) VALUES (?, ?)");
+        $stmt->bind_param("ss", $username, $password);
 
-    // Check if username already exists
-    $query = mysqli_query($conn, "");
-
-    if (mysqli_num_rows($query) > 0) {
-        $bool = false;
-        echo '<script>alert("Username has been taken!");</script>';
-        echo '<script>window.location.assign("register.php");</script>';
-    }
-
-    if ($bool) {
-        $insert = mysqli_query($conn, "INSERT INTO users (username,password) VALUES ('$username','$password')");
-        if ($insert) {
-            echo '<script>alert("Successfully Registered!");</script>';
-            echo '<script>window.location.assign("register.php");</script>';
+        if ($stmt->execute()) {
+            echo '<script>alert("Successfully Registered! Please login."); window.location.assign("login.php");</script>';
         } else {
             echo '<script>alert("Error registering user.");</script>';
         }
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
